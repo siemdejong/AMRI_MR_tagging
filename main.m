@@ -75,6 +75,7 @@ Nspins = 1000;
 Gamp = 20e-3;
 tgrad = 10e-3;
 [X, Y, M] = sinusoidal_spins_2D(Nspins, Gamp, tgrad);
+% [X, Y, M] = sinusoidal_spins_2D_composite_pulses(Nspins, Gamp, tgrad);
 plot_sinusoidal_spins_2D(X, Y, M)
 
 %% 2D time evolution, including T1/T2 relaxation
