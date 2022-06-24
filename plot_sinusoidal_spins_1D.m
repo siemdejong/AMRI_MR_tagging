@@ -6,8 +6,9 @@ function plot_sinusoidal_spins_1D(X, M)
     plot(X, M(:, 3), 'green', ...
         X, M(:, 2), 'blue', ...
         X, M(:, 1), 'red')
+    xlim([0, 1e-4])
     xlabel('x [m]')
-    ylabel('M [N m T^{-1}]')
+    ylabel('M')
     legend('Mz', 'My', 'Mx')
 
 end
