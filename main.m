@@ -47,7 +47,7 @@ Magn2Movie_update(M_i, 60, dt, 1, 1)
 Nspins = 100;
 Gamp = 20e-3;
 tgrad = 10e-3;
-T = 1;
+T = 1e-1;
 dt = 50e-6;
 free_precession = true;
 
