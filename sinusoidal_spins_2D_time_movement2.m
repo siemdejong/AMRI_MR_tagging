@@ -73,19 +73,14 @@ function M = sinusoidal_spins_2D_time_movement2(Nspins, Gamp, tgrad, T, dt, free
                     M(spin_x, spin_y, :, t) = FP.Afp_dt * squeeze(M(spin_x, spin_y, :, t - 1)) + FP.Bfp_dt;
                 end
         
-                if t > 600
-                    if movement
-                        [X, Y] = move_spins3(X, Y, V, dt);
-                    end
-                end
+
+            end
+        end
+        
+        if t > 600
+            if movement
+                [X, Y] = move_spins3(X, Y, V, dt);
             end
         end
     end
-
-    % Show movie of Mz for debugging purposes.
-    M = M(:, :, :, 2:end);
-    [X, cmap] = gray2ind(M, 256);
-    movie = immovie(X(:, :, 3, :), cmap);
-    implay(movie);
-
 end

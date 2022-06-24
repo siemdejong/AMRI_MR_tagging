@@ -82,7 +82,7 @@ plot_sinusoidal_spins_2D(X, Y, M)
 Nspins = 1000;
 Gamp = 20e-3;
 tgrad = 10e-3;
-T = 1;
+T = 1e-1;
 dt = 50e-6;
 free_precession = true;
 
@@ -114,7 +114,7 @@ implay(movie);
 Nspins = 1000;
 Gamp = 20e-3;
 tgrad = 10e-3;
-T = 1;
+T = 0.5;
 dt = 50e-6;
 free_precession = true;
 movement = true;
@@ -140,7 +140,7 @@ implay(movie);
 Nspins = 1000;
 Gamp = 20e-3;
 tgrad = 10e-3;
-T = 1;
+T = 1e-1;
 dt = 50e-6;
 free_precession = true;
 movement = true;
