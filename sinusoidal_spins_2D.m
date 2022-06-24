@@ -30,13 +30,13 @@ function [X, Y, spin_magnetizations] = sinusoidal_spins_2D(Nspins, Gamp, tgrad)
 
             % 90 degree RF pulse
             % -> Rotate to xz plane.
-            M = throt(pi / 2, 0) * M;
+            M = throt(pi / 2, pi) * M;
             
             % 90 degree RF pulse
             % -> Rotate in xz plane.
             M = throt(pi / 2, pi / 2) * M; 
     
-            % Encoding gradient
+            % Tagging gradient y
             % -> Fan out even more in transversal plane (makes sphere).
             y = Y(spin_y, 1);
             df = Gamp * y * gamma;
@@ -45,7 +45,7 @@ function [X, Y, spin_magnetizations] = sinusoidal_spins_2D(Nspins, Gamp, tgrad)
     
             % 90 degree RF pulse
             % -> Rotate in yz plane.
-            M = throt(pi / 2, pi / 2) * M;
+            M = throt(pi / 2, 3 * pi / 2) * M;
     
             % Save tagged magnetization.
             spin_magnetizations(spin_x, spin_y, :) = M;
