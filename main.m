@@ -33,7 +33,7 @@ invert = true;
 plot_sinusoidal_spins_1D_time(M_i, t, X, invert);
 
 % Plot tagged and anatomical image.
-plot_cspamm_images(M, M_i, time, X);
+plot_cspamm_images(M, M_i, t, X);
 
 pause
 
