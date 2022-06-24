@@ -1,4 +1,4 @@
-function [spin_positions, spin_magnetizations] = sinusoidal_spins_1D(Nspins, Gamp, tgrad)
+function [spin_positions, spin_magnetizations] = sinusoidal_spins_1D(Nspins, Gamp, tgrad, invert)
     % This functions outputs a plot of a 1D array of spins that are tagged
     % with the SPAMM tagging sequence.
     % 
@@ -29,7 +29,11 @@ function [spin_positions, spin_magnetizations] = sinusoidal_spins_1D(Nspins, Gam
 
         % 90 degree RF pulse
         % -> Rotate to zx-plane.
-        M = throt(pi / 2, pi / 2) * M; 
+        if ~invert
+            M = throt(pi / 2, pi) * M;
+        else
+            M = throt(-pi / 2, pi) * M;
+        end
 
         % Save tagged magnetization.
         spin_magnetizations(spin, :) = M;
