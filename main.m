@@ -9,18 +9,19 @@
 
 %% 1D time-independent
 Nspins = 1000;
-Gamp = 20e-3;
+Gamp = 40e-3;
 tgrad = 10e-3;
-[X, M] = sinusoidal_spins_1D(Nspins, Gamp, tgrad);
+invert = true;
+[X, M] = sinusoidal_spins_1D(Nspins, Gamp, tgrad, invert);
 plot_sinusoidal_spins_1D(X, M)
 
 %% 1D time evolution, neglecting T1/T2 relaxation, including CSPAMM
-Nspins = 100;
-Gamp = 20e-3;
+Nspins = 1000;
+Gamp = 100e-3;
 tgrad = 10e-3;
 T = 1;
 dt = 50e-6;
-free_precession = false;
+free_precession = true;
 
 % SPAMM
 invert = false;
@@ -35,11 +36,28 @@ plot_sinusoidal_spins_1D_time(M_i, t, X, invert);
 % Plot tagged and anatomical image.
 plot_cspamm_images(M, M_i, t, X);
 
-pause
+% pause
+% 
+% % Movies
+% Magn2Movie_update(M, 60, dt, 1, 1)
+% Magn2Movie_update(M_i, 60, dt, 1, 1)
 
-% Movies
-Magn2Movie_update(M, 60, dt, 1, 1)
-Magn2Movie_update(M_i, 60, dt, 1, 1)
+%% 1D time evolution, moving spins
+% Nspins = 10;
+% Gamp = 20e-3;
+% tgrad = 10e-3;
+% T = 10e-1;
+% dt = 50e-6;
+% free_precession = false;
+% invert = false;
+% movement = true;
+% 
+% [X, V, M, t, dt] = sinusoidal_spins_1D_time_movement(Nspins, Gamp, tgrad, T, dt, free_precession, invert, movement);
+% % M = M(:, :, 2:end);
+% % [A, cmap] = gray2ind(M, 256);
+% % movie = immovie(A(:, 3, :), cmap);
+% % implay(movie);
+
 
 %% 1D time evolution, including T1/T2 relaxation and CSPAMM
 % Does not give the desired results yet! Tagging image should not have T1
@@ -56,6 +74,14 @@ invert = false;
 [M, X, t, dt] = sinusoidal_spins_1D_time(Nspins, Gamp, tgrad, T, dt, free_precession, invert);
 plot_sinusoidal_spins_1D_time(M, t, X, invert);
 
+% figure('Name', 'CSPAMM')
+% subplot(1, 2, 1)
+% imagesc(t, X, squeeze(abs(M(1, :, :) + 1i*M(2, :, :)))', [-1, 1])
+% title('M_abs, Tagged')
+% colormap gray
+% xlabel('time [s]')
+% ylabel('x [m]')
+
 % SPAMM with -90 degrees RF pulse
 invert = true;
 [M_i, X, t, dt] = sinusoidal_spins_1D_time(Nspins, Gamp, tgrad, T, dt, free_precession, invert);
@@ -68,11 +94,11 @@ pause
 
 % Movies
 Magn2Movie_update(M, 60, dt, 1, 1)
-Magn2Movie_update(M_i, 60, dt, 1, 1)
+% Magn2Movie_update(M_i, 60, dt, 1, 1)
 
 %% 2D time-independent
 Nspins = 1000;
-Gamp = 20e-3;
+Gamp = 100e-3;
 tgrad = 10e-3;
 [X, Y, M] = sinusoidal_spins_2D(Nspins, Gamp, tgrad);
 % [X, Y, M] = sinusoidal_spins_2D_composite_pulses(Nspins, Gamp, tgrad);
@@ -80,14 +106,25 @@ plot_sinusoidal_spins_2D(X, Y, M)
 
 %% 2D time evolution, including T1/T2 relaxation
 Nspins = 1000;
-Gamp = 20e-3;
+Gamp = 110e-3;
 tgrad = 10e-3;
 T = 1e-1;
 dt = 50e-6;
 free_precession = true;
 
 % SPAMM
-M = sinusoidal_spins_2D_time(Nspins, Gamp, tgrad, T, dt, free_precession);
+invert = false;
+M = sinusoidal_spins_2D_time(Nspins, Gamp, tgrad, T, dt, free_precession, invert);
+
+% Show movie of Mz for debugging purposes.
+X = permute(M, [3 4 1 2]);
+[X, cmap] = gray2ind(X, 256);
+movie = immovie(X(:, :, 3, :), cmap);
+implay(movie);
+
+% SPAMM with -90 degrees RF pulse
+invert = true;
+M = sinusoidal_spins_2D_time(Nspins, Gamp, tgrad, T, dt, free_precession, invert);
 
 % Show movie of Mz for debugging purposes.
 X = permute(M, [3 4 1 2]);
