@@ -40,8 +40,8 @@ function [spin_magnetizations, spin_positions, time, dt] = sinusoidal_spins_1D_t
             % -> fan out in xy-plane.
             x = spin_positions(spin);
             df = Gamp * x * gamma;
-            if t > 200 && t < 300
-                phi = 2 * pi * df * tgrad;
+            if t > 200 && t < 200 + tgrad / dt
+                phi = 2 * pi * df * dt;
                 M = zrot(phi) * M; % Encoding gradient
             end
 
@@ -49,9 +49,9 @@ function [spin_magnetizations, spin_positions, time, dt] = sinusoidal_spins_1D_t
             % -> Rotate to zx-plane.
             if t == 400
                 if ~invert
-                    M = throt(pi / 2, pi / 2) * M; % 90 degree RF pulse
+                    M = throt(pi / 2, pi) * M; % 90 degree RF pulse
                 else
-                    M = throt(-pi / 2, pi / 2) * M; % -90 degree RF pulse
+                    M = throt(-pi / 2, pi) * M; % -90 degree RF pulse
                 end
             end
 

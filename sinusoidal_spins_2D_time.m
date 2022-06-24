@@ -1,4 +1,4 @@
-function spin_magnetizations = sinusoidal_spins_2D_time(Nspins, Gamp, tgrad, T, dt, free_precession)
+function spin_magnetizations = sinusoidal_spins_2D_time(Nspins, Gamp, tgrad, T, dt, free_precession, invert)
     % This functions outputs a plot of a 2D array of spins that are tagged
     % with the SPAMM tagging sequence.
     % Nspins - number of spins to distribute on the grid.
@@ -32,24 +32,24 @@ function spin_magnetizations = sinusoidal_spins_2D_time(Nspins, Gamp, tgrad, T, 
                 % -> fan out in xy-plane.
                 x = X(1, spin_x);
                 df = Gamp * x * gamma;
-                if t > 200 && t < 300
-                    phi = 2 * pi * df * tgrad;
+                if t > 200 && t < 200 + tgrad / dt
+                    phi = 2 * pi * df * dt;
                     M = zrot(phi) * M;
                 end
     
                 % 90 degree RF pulse
                 % -> Rotate to zx-plane.
                 if t == 400
-                    M = throt(pi / 2, pi / 2) * M; % 90 degree RF pulse
+                    M = throt(pi / 2, pi) * M; % 90 degree RF pulse
                 end
         
-                % Encoding gradient
+                % Tagging gradient y
                 % -> make sphere.
                 y = Y(spin_y, 1);
                 df = Gamp * y * gamma;
-                if t == 500
-                    phi = 2 * pi * df * tgrad;
-                    M = zrot(phi) * M;
+                if t > 500 && t < 500 + tgrad / dt
+                    phi = 2 * pi * df * dt;
+                    M = zrot(-phi) * M;
                 end
         
                 % 90 degree RF pulse
@@ -62,6 +62,16 @@ function spin_magnetizations = sinusoidal_spins_2D_time(Nspins, Gamp, tgrad, T, 
                 if free_precession
                     [FP.Afp_dt, FP.Bfp_dt] = freeprecess(dt, T1, T2, df);
                     M = FP.Afp_dt * M + FP.Bfp_dt;
+                end
+
+                % 90 degree RF pulse
+                % -> Rotate in zy-plane.
+                if t == 600
+                    if ~invert
+                        M = throt(pi / 2, 3 * pi / 2) * M; % 90 degree RF pulse
+                    else
+                        M = throt(-pi / 2, 3 * pi / 2) * M;
+                    end
                 end
         
                 % Save tagged magnetization.
