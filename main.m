@@ -106,9 +106,11 @@ invert = false;
 plot_sinusoidal_spins_2D(X, Y, M)
 
 invert = true;
-[X, Y, M] = sinusoidal_spins_2D(Nspins, Gamp, tgrad, invert);
+[X, Y, M_i] = sinusoidal_spins_2D(Nspins, Gamp, tgrad, invert);
+plot_sinusoidal_spins_2D(X, Y, M_i)
+
 % [X, Y, M] = sinusoidal_spins_2D_composite_pulses(Nspins, Gamp, tgrad);
-plot_sinusoidal_spins_2D(X, Y, M)
+
 
 %% 2D time evolution, including T1/T2 relaxation
 Nspins = 1000;
