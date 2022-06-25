@@ -1,4 +1,4 @@
-function [X, Y, spin_magnetizations] = sinusoidal_spins_2D(Nspins, Gamp, tgrad)
+function [X, Y, spin_magnetizations] = sinusoidal_spins_2D(Nspins, Gamp, tgrad, invert)
     % This functions outputs a plot of a 2D array of spins that are tagged
     % with the SPAMM tagging sequence.
     % 
@@ -11,7 +11,7 @@ function [X, Y, spin_magnetizations] = sinusoidal_spins_2D(Nspins, Gamp, tgrad)
     [X, Y] = meshgrid(linspace(0, 1e-4, sqrt(Nspins))); % [m]
     spin_magnetizations = zeros([size(X), 3]); % [N m / T]
     
-    for spin_x = 1:length(X)
+    for spin_x = progress(1:length(X))
         for spin_y = 1:length(Y)
             
             % Initialize magnetization.
@@ -34,7 +34,11 @@ function [X, Y, spin_magnetizations] = sinusoidal_spins_2D(Nspins, Gamp, tgrad)
             
             % 90 degree RF pulse
             % -> Rotate in xz plane.
-            M = throt(pi / 2, pi / 2) * M; 
+            if ~invert
+                M = throt(pi / 2, pi / 2) * M; 
+            else
+                M = throt(-pi / 2, pi / 2) * M; 
+            end
     
             % Tagging gradient y
             % -> Fan out even more in transversal plane (makes sphere).
@@ -45,7 +49,11 @@ function [X, Y, spin_magnetizations] = sinusoidal_spins_2D(Nspins, Gamp, tgrad)
     
             % 90 degree RF pulse
             % -> Rotate in yz plane.
-            M = throt(pi / 2, 3 * pi / 2) * M;
+            if ~invert
+                M = throt(pi / 2, 3 * pi / 2) * M;
+            else
+                M = throt(-pi / 2, 3 * pi / 2) * M;
+            end
     
             % Save tagged magnetization.
             spin_magnetizations(spin_x, spin_y, :) = M;

@@ -97,10 +97,16 @@ Magn2Movie_update(M, 60, dt, 1, 1)
 % Magn2Movie_update(M_i, 60, dt, 1, 1)
 
 %% 2D time-independent
-Nspins = 1000;
+Nspins = 1e6;
 Gamp = 100e-3;
 tgrad = 10e-3;
-[X, Y, M] = sinusoidal_spins_2D(Nspins, Gamp, tgrad);
+
+invert = false;
+[X, Y, M] = sinusoidal_spins_2D(Nspins, Gamp, tgrad, invert);
+plot_sinusoidal_spins_2D(X, Y, M)
+
+invert = true;
+[X, Y, M] = sinusoidal_spins_2D(Nspins, Gamp, tgrad, invert);
 % [X, Y, M] = sinusoidal_spins_2D_composite_pulses(Nspins, Gamp, tgrad);
 plot_sinusoidal_spins_2D(X, Y, M)
 
