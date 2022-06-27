@@ -1,4 +1,4 @@
-function spin_magnetizations = sinusoidal_spins_2D_time(Nspins, Gamp, tgrad, T, dt, free_precession, invert)
+function [spin_magnetizations, X, Y, time] = sinusoidal_spins_2D_time(Nspins, Gamp, tgrad, T, dt, free_precession, invert)
     % This functions outputs a plot of a 2D array of spins that are tagged
     % with the SPAMM tagging sequence.
     % Nspins - number of spins to distribute on the grid.

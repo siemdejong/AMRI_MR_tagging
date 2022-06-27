@@ -117,7 +117,7 @@ plot_sinusoidal_spins_2D(X, Y, M_i)
 
 %% 2D time evolution, including T1/T2 relaxation
 Nspins = 1000;
-Gamp = 110e-3;
+Gamp = 80e-3;
 tgrad = 10e-3;
 T = 1e-1;
 dt = 50e-6;
@@ -125,23 +125,25 @@ free_precession = true;
 
 % SPAMM
 invert = false;
-M = sinusoidal_spins_2D_time(Nspins, Gamp, tgrad, T, dt, free_precession, invert);
+[M, X, Y, time] = sinusoidal_spins_2D_time(Nspins, Gamp, tgrad, T, dt, free_precession, invert);
+
+make_2D_movie(M, X, Y, time, dt)
 
 % Show movie of Mz for debugging purposes.
-X = permute(M, [3 4 1 2]);
-[X, cmap] = gray2ind(X, 256);
-movie = immovie(X(:, :, 3, :), cmap);
-implay(movie);
-
-% SPAMM with -90 degrees RF pulse
-invert = true;
-M = sinusoidal_spins_2D_time(Nspins, Gamp, tgrad, T, dt, free_precession, invert);
-
-% Show movie of Mz for debugging purposes.
-X = permute(M, [3 4 1 2]);
-[X, cmap] = gray2ind(X, 256);
-movie = immovie(X(:, :, 3, :), cmap);
-implay(movie);
+% X = permute(M, [3 4 1 2]);
+% [X, cmap] = gray2ind(X, 256);
+% movie = immovie(X(:, :, 3, :), cmap);
+% implay(movie);
+% 
+% % SPAMM with -90 degrees RF pulse
+% invert = true;
+% M = sinusoidal_spins_2D_time(Nspins, Gamp, tgrad, T, dt, free_precession, invert);
+% 
+% % Show movie of Mz for debugging purposes.
+% X = permute(M, [3 4 1 2]);
+% [X, cmap] = gray2ind(X, 256);
+% movie = immovie(X(:, :, 3, :), cmap);
+% implay(movie);
 
 %% 2D time evolution, including T1/T2 relaxation, and movement
 % Movement is tried to mimick with a line moving in the y-direction.
