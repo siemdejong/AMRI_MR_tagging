@@ -42,6 +42,10 @@ function spin_magnetizations = sinusoidal_spins_2D_time(Nspins, Gamp, tgrad, T, 
                 if t == 400
                     M = throt(pi / 2, pi) * M; % 90 degree RF pulse
                 end
+
+                if t == 500
+                    M = throt(pi / 2, pi / 2) * M;
+                end
         
                 % Tagging gradient y
                 % -> make sphere.
@@ -50,12 +54,6 @@ function spin_magnetizations = sinusoidal_spins_2D_time(Nspins, Gamp, tgrad, T, 
                 if t > 500 && t < 500 + tgrad / dt
                     phi = 2 * pi * df * dt;
                     M = zrot(-phi) * M;
-                end
-        
-                % 90 degree RF pulse
-                % -> Rotate in zy-plane.
-                if t == 600
-                    M = throt(pi / 2, pi / 2) * M; % 90 degree RF pulse
                 end
     
                 % Allow for relaxation at every timestep.
@@ -66,7 +64,7 @@ function spin_magnetizations = sinusoidal_spins_2D_time(Nspins, Gamp, tgrad, T, 
 
                 % 90 degree RF pulse
                 % -> Rotate in zy-plane.
-                if t == 600
+                if t == 700
                     if ~invert
                         M = throt(pi / 2, 3 * pi / 2) * M; % 90 degree RF pulse
                     else
