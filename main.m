@@ -87,6 +87,9 @@ invert = true;
 [M_i, X, t, dt] = sinusoidal_spins_1D_time(Nspins, Gamp, tgrad, T, dt, free_precession, invert);
 plot_sinusoidal_spins_1D_time(M_i, t, X, invert);
 
+% Plot (C)SPAMM contrast
+plot_contrast(M, M_i, t)
+
 % Plot tagged and anatomical image.
 plot_cspamm_images(M, M_i, t, X);
 
