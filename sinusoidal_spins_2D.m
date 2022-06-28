@@ -24,8 +24,8 @@ function [X, Y, spin_magnetizations] = sinusoidal_spins_2D(Nspins, Gamp, tgrad, 
             % Tagging gradient x
             % -> Fan out in transversal plane.
             x = X(1, spin_x);
-            df = Gamp * x * gamma;
-            phi = 2 * pi * df * tgrad;
+            dfx = Gamp * x * gamma;
+            phi = 2 * pi * dfx * tgrad;
             M = zrot(phi) * M;
 
             % 90 degree RF pulse
@@ -43,8 +43,8 @@ function [X, Y, spin_magnetizations] = sinusoidal_spins_2D(Nspins, Gamp, tgrad, 
             % Tagging gradient y
             % -> Fan out even more in transversal plane (makes sphere).
             y = Y(spin_y, 1);
-            df = Gamp * y * gamma;
-            phi = 2 * pi * df * tgrad;
+            dfy = Gamp * y * gamma;
+            phi = 2 * pi * dfy * tgrad;
             M = zrot(phi) * M;
     
             % 90 degree RF pulse

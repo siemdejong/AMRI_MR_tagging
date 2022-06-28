@@ -31,9 +31,9 @@ function [spin_magnetizations, X, Y, time] = sinusoidal_spins_2D_time(Nspins, Ga
                 % Encoding gradient
                 % -> fan out in xy-plane.
                 x = X(1, spin_x);
-                df = Gamp * x * gamma;
+                dfx = Gamp * x * gamma;
                 if t > 200 && t < 200 + tgrad / dt
-                    phi = 2 * pi * df * dt;
+                    phi = 2 * pi * dfx * dt;
                     M = zrot(phi) * M;
                 end
     
@@ -50,14 +50,17 @@ function [spin_magnetizations, X, Y, time] = sinusoidal_spins_2D_time(Nspins, Ga
                 % Tagging gradient y
                 % -> make sphere.
                 y = Y(spin_y, 1);
-                df = Gamp * y * gamma;
+                dfy = Gamp * y * gamma;
                 if t > 500 && t < 500 + tgrad / dt
-                    phi = 2 * pi * df * dt;
+                    phi = 2 * pi * dfy * dt;
                     M = zrot(-phi) * M;
                 end
     
                 % Allow for relaxation at every timestep.
                 if free_precession
+%                     df = sqrt(dfx^2 + dfy^2);
+%                     df = (dfx + dfy) / 2;
+                    df = dfx + dfy;
                     [FP.Afp_dt, FP.Bfp_dt] = freeprecess(dt, T1, T2, df);
                     M = FP.Afp_dt * M + FP.Bfp_dt;
                 end
