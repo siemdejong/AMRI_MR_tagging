@@ -112,6 +112,10 @@ invert = true;
 [X, Y, M_i] = sinusoidal_spins_2D(Nspins, Gamp, tgrad, invert);
 plot_sinusoidal_spins_2D(X, Y, M_i)
 
+% Warp image to mimick movement
+M_warped = barrel_warp(M);
+plot_sinusoidal_spins_2D(X, Y, M_warped)
+
 % [X, Y, M] = sinusoidal_spins_2D_composite_pulses(Nspins, Gamp, tgrad);
 
 
