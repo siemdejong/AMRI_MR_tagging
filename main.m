@@ -16,7 +16,7 @@ invert = true;
 plot_sinusoidal_spins_1D(X, M)
 
 %% 1D time evolution, neglecting T1/T2 relaxation, including CSPAMM
-Nspins = 1000;
+Nspins = 1e3;
 Gamp = 100e-3;
 tgrad = 10e-3;
 T = 1;
@@ -36,11 +36,12 @@ plot_sinusoidal_spins_1D_time(M_i, t, X, invert);
 % Plot tagged and anatomical image.
 plot_cspamm_images(M, M_i, t, X);
 
-% pause
-% 
-% % Movies
-% Magn2Movie_update(M, 60, dt, 1, 1)
-% Magn2Movie_update(M_i, 60, dt, 1, 1)
+pause
+
+% Movies
+Magn2Movie_update(M, 60, dt, 1, 1)
+pause
+Magn2Movie_update(M_i, 60, dt, 1, 1)
 
 %% 1D time evolution, moving spins
 % Nspins = 10;
@@ -60,12 +61,10 @@ plot_cspamm_images(M, M_i, t, X);
 
 
 %% 1D time evolution, including T1/T2 relaxation and CSPAMM
-% Does not give the desired results yet! Tagging image should not have T1
-% artifacts, even for smaller T1 (to be set in sinusoidal_spins_1D_time).
-Nspins = 100;
-Gamp = 20e-3;
+Nspins = 1000;
+Gamp = 100e-3;
 tgrad = 10e-3;
-T = 1e-1;
+T = 1;
 dt = 50e-6;
 free_precession = true;
 
@@ -73,14 +72,6 @@ free_precession = true;
 invert = false;
 [M, X, t, dt] = sinusoidal_spins_1D_time(Nspins, Gamp, tgrad, T, dt, free_precession, invert);
 plot_sinusoidal_spins_1D_time(M, t, X, invert);
-
-% figure('Name', 'CSPAMM')
-% subplot(1, 2, 1)
-% imagesc(t, X, squeeze(abs(M(1, :, :) + 1i*M(2, :, :)))', [-1, 1])
-% title('M_abs, Tagged')
-% colormap gray
-% xlabel('time [s]')
-% ylabel('x [m]')
 
 % SPAMM with -90 degrees RF pulse
 invert = true;
@@ -97,7 +88,7 @@ pause
 
 % Movies
 Magn2Movie_update(M, 60, dt, 1, 1)
-% Magn2Movie_update(M_i, 60, dt, 1, 1)
+Magn2Movie_update(M_i, 60, dt, 1, 1)
 
 %% 2D time-independent
 Nspins = 1e6;
@@ -120,12 +111,12 @@ plot_sinusoidal_spins_2D(X, Y, M_warped)
 
 
 %% 2D time evolution, including T1/T2 relaxation
-Nspins = 1000;
-Gamp = 80e-3;
+Nspins = 1e4;
+Gamp = 100e-3;
 tgrad = 10e-3;
 T = 1e-1;
 dt = 50e-6;
-free_precession = true;
+free_precession = false;
 
 % SPAMM
 invert = false;
