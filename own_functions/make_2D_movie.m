@@ -2,7 +2,7 @@ function make_2D_movie(M, X, Y, time, dt)
     % Output a movie of z-magnetization of a 2D array
     % of spins undergoing T1/T2 relaxation.
     
-    Mz1 = squeeze(M(3, 1, :, :));
+    Mz1 = abs(squeeze(M(3, 1, :, :)));
     imagesc(X(1, :), Y(:, 1), Mz1);
     colormap gray;
     axis tight manual;
@@ -14,9 +14,9 @@ function make_2D_movie(M, X, Y, time, dt)
     for t = 2:5:length(time)
         title('t = ' + string(round(dt * t, 4)) + ' s');
 
-        Mz = squeeze(M(3, t, :, :));
+        Mz = abs(squeeze(M(3, t, :, :)));
         
-        imagesc(X(1, :), Y(:, 1), Mz, [-1 1]);
+        imagesc(X(1, :), Y(:, 1), Mz, [0 1]);
         view(2);
         ylabel('y [m]');
         xlabel('x [m]');
