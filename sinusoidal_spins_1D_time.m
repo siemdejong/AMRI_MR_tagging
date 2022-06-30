@@ -1,4 +1,4 @@
-function [spin_magnetizations, spin_positions, time, dt] = sinusoidal_spins_1D_time(Nspins, Gamp, tgrad, T, dt, free_precession, invert)
+function [spin_magnetizations, spin_positions, time, dt] = sinusoidal_spins_1D_time(Nspins, Gamp, tgrad, T, dt, free_precession, invert, flip_angle)
     % This functions outputs a plot of a 1D array of spins that are tagged
     % with the SPAMM tagging sequence.
     % 
@@ -10,6 +10,7 @@ function [spin_magnetizations, spin_positions, time, dt] = sinusoidal_spins_1D_t
     % free_precession - turn on/off T1/T2 relaxation [boolean]
     % movement - turn on/off movement of a horizontal line [boolean]
     % invert - invert the last RF pulse to get complementary magnetization
+    % flip_angle - flip angle [rad]
 
     gamma = 42.58e6; % /s /T
 
@@ -33,7 +34,7 @@ function [spin_magnetizations, spin_positions, time, dt] = sinusoidal_spins_1D_t
             % 90 degree RF pulse
             % -> y-axis.
             if t == 100
-                M = throt(pi / 2, 0) * M; % 90 degree RF pulse
+                M = throt(flip_angle, 0) * M; % 90 degree RF pulse
             end
 
             % Encoding gradient
@@ -49,9 +50,9 @@ function [spin_magnetizations, spin_positions, time, dt] = sinusoidal_spins_1D_t
             % -> Rotate to zx-plane.
             if t == 400
                 if ~invert
-                    M = throt(pi / 2, pi) * M; % 90 degree RF pulse
+                    M = throt(flip_angle, pi) * M; % 90 degree RF pulse
                 else
-                    M = throt(-pi / 2, pi) * M; % -90 degree RF pulse
+                    M = throt(-flip_angle, pi) * M; % -90 degree RF pulse
                 end
             end
 
