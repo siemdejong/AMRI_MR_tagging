@@ -1,10 +1,11 @@
-function [X, Y, spin_magnetizations] = sinusoidal_spins_2D(Nspins, Gamp, tgrad, invert)
+function [X, Y, spin_magnetizations] = sinusoidal_spins_2D(Nspins, Gamp, tgrad, invert, gradtwodim)
     % This functions outputs a plot of a 2D array of spins that are tagged
     % with the SPAMM tagging sequence.
     % 
     % Nspins - Number of spins
     % Gamp - Gradient amplitude [T / m]
     % tgrad - Gradient duration [s]
+    % gradtwodim - Toggle to switch on gradient for second direction [boolean]
     
     gamma = 42.58e6; % /s /T
 
@@ -31,28 +32,31 @@ function [X, Y, spin_magnetizations] = sinusoidal_spins_2D(Nspins, Gamp, tgrad, 
             % 90 degree RF pulse
             % -> Rotate to xz plane.
             M = throt(pi / 2, pi) * M;
+
+            if gradtwodim
             
-            % 90 degree RF pulse
-            % -> Rotate in xz plane.
-            if ~invert
-                M = throt(pi / 2, pi / 2) * M; 
-            else
-                M = throt(-pi / 2, pi / 2) * M; 
-            end
-    
-            % Tagging gradient y
-            % -> Fan out even more in transversal plane (makes sphere).
-            y = Y(spin_y, 1);
-            dfy = Gamp * y * gamma;
-            phi = 2 * pi * dfy * tgrad;
-            M = zrot(phi) * M;
-    
-            % 90 degree RF pulse
-            % -> Rotate in yz plane.
-            if ~invert
-                M = throt(pi / 2, 3 * pi / 2) * M;
-            else
-                M = throt(-pi / 2, 3 * pi / 2) * M;
+                % 90 degree RF pulse
+                % -> Rotate in xz plane.
+                if ~invert
+                    M = throt(pi / 2, pi / 2) * M; 
+                else
+                    M = throt(-pi / 2, pi / 2) * M; 
+                end
+        
+                % Tagging gradient y
+                % -> Fan out even more in transversal plane (makes sphere).
+                y = Y(spin_y, 1);
+                dfy = Gamp * y * gamma;
+                phi = 2 * pi * dfy * tgrad;
+                M = zrot(phi) * M;
+        
+                % 90 degree RF pulse
+                % -> Rotate in yz plane.
+                if ~invert
+                    M = throt(pi / 2, 3 * pi / 2) * M;
+                else
+                    M = throt(-pi / 2, 3 * pi / 2) * M;
+                end
             end
     
             % Save tagged magnetization.
