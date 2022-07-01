@@ -18,9 +18,9 @@ function plot_sinusoidal_spins_1D_merged(X, M, M_i, cspamm)
     if cspamm
         hold on
         p3 = plot(X, abs(M(:, 3)) - abs(M_i(:, 3)));
-        p3.Color = 'red';
-        p3.LineStyle = '--';
-        p3.LineWidth = 3;
+        p3.Color = '#FFA500';
+        p3.LineStyle = '-';
+        p3.LineWidth = 1;
 
         legend('90°/90°', '90°/-90°', 'CSPAMM', 'Location', 'east', 'FontSize', 17)
     else

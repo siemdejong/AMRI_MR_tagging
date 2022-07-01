@@ -50,7 +50,7 @@ M = squeeze(M(:, 10000, :));
 M = permute(M, [2, 1]);
 M_i = squeeze(M_i(:, 10000, :));
 M_i = permute(M_i, [2, 1]);
-plot_sinusoidal_spins_1D_merged(X, M, M_i)
+plot_sinusoidal_spins_1D_merged(X, M, M_i, true)
 
 %% Flip angle experiment
 disp("Simulating 1D time-dependent SPAMM 90/+-90 degrees with multiple flip angles.");

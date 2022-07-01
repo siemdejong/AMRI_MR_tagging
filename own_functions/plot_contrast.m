@@ -1,4 +1,8 @@
 function plot_contrast(M, M_i, time)
+    % Calculates contrast and plots the contrast.
+    % M - magnetization vector for N spins in time after SPAMM 90/90.
+    % M_i - M, but with a SPAMM 90/-90 degree sequence.
+    % time - a list with timepoints [s].
 
     Mz = abs(squeeze(M(3, :, :)));
     Mz_i = abs(squeeze(M_i(3, :, :)));
@@ -29,6 +33,8 @@ function plot_contrast(M, M_i, time)
 
     hold on
     plot(time, (max_CSPAMMz - min_CSPAMMz)' ./ (max_CSPAMMz + min_CSPAMMz)', '--', 'linewidth', 2)
+
+    ylim([0, 1.2])
 
     legend('SPAMM', 'CSPAMM', 'Location', 'south')
     ax = gca;
