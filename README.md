@@ -16,5 +16,5 @@ Ignore unused code.
 `own_functions` contains self-written functions. Some of them are used, some are crap to show progress.
 
 ## Usage
-Run `images_paper.m` to retrieve plots and images that were used for the term paper.
+Run `paper_images.m` to retrieve plots and images that were used for the term paper.
 Other top-level functions are for testing purposes.
